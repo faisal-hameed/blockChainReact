@@ -4,11 +4,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
 
-import { PageHeading } from "./pageHeading";
+import { PageHeading } from "../core/pageHeading";
 
 class PrivateBlockChain extends Component {
     ip='http://13.126.11.59:8000';
-    // responseData
 
     constructor(props) {
         super(props);
