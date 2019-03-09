@@ -79,37 +79,47 @@ class Signing extends Component {
                 </div>
 
                 <div className="jumbotron">
-                    <Form onSubmit={this.handleSignDataSubmit}>
-                        <div className="row">
-                            <div className="col-md-2">
-                                Data
-                            </div>
-                            <div className="col-md-8">
-                                <Form.Control type="text" placeholder="Data to be signed" value={this.state.data} onChange={this.handleDataChange} />
-                            </div>
-                        </div>
-                        <div className="row mt-2 mb-2">
-                            <div className="col-md-2">
-                                Private Key
-                            </div>
-                            <div className="col-md-8">
-                                <Form.Control type="text" placeholder="User's private key" value={this.state.privateKey} onChange={this.handleKeyChange} />
-                            </div>
-                        </div>
-                        <div className="row mt-2 mb-2">
-                            <div className="col-md-12 text-center">
-                                <Button variant="primary" type="submit">Sign</Button>
-                            </div>
-                        </div>
-                    </Form>
                     <div className="row">
-                        <div className="col-md-2">
-                            Signature
-                        </div>
                         <div className="col-md-8">
-                            <Form.Control as="textarea" rows="3" value={this.state.signature} readOnly />
+                            <Form onSubmit={this.handleSignDataSubmit}>
+                                <div className="row">
+                                    <div className="col-md-2">
+                                        Data
+                            </div>
+                                    <div className="col-md-10">
+                                        <Form.Control type="text" placeholder="Data to be signed" value={this.state.data} onChange={this.handleDataChange} />
+                                    </div>
+                                </div>
+                                <div className="row mt-2 mb-2">
+                                    <div className="col-md-2">
+                                        Private Key
+                            </div>
+                                    <div className="col-md-10">
+                                        <Form.Control type="text" placeholder="User's private key" value={this.state.privateKey} onChange={this.handleKeyChange} />
+                                    </div>
+                                </div>
+                                <div className="row mt-2 mb-2">
+                                    <div className="col-md-12 text-center">
+                                        <Button variant="primary" type="submit">Sign</Button>
+                                    </div>
+                                </div>
+                            </Form>
+                            <div className="row mt-3">
+                                <div className="col-md-2">
+                                    Signature
+                        </div>
+                                <div className="col-md-10">
+                                    <Form.Control as="textarea" rows="3" value={this.state.signature} readOnly />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4">
+                            <Form.Control as="textarea" rows="9" value="" readOnly />
+
                         </div>
                     </div>
+
 
                 </div>
                 <hr />
@@ -119,12 +129,14 @@ class Signing extends Component {
                     </div>
                 </div>
                 <div className="jumbotron">
-                    <Form onSubmit={this.handleValidateSubmit}>
+                   <div className="row">
+                   <div className="col-md-8">
+                   <Form onSubmit={this.handleValidateSubmit}>
                         <div className="row">
                             <div className="col-md-2">
                                 Data
                             </div>
-                            <div className="col-md-8">
+                            <div className="col-md-10">
                                 <Form.Control type="text" placeholder="Data against which signature is generated" value={this.state.data} onChange={this.handleDataChange} />
                             </div>
                         </div>
@@ -132,7 +144,7 @@ class Signing extends Component {
                             <div className="col-md-2">
                                 Wallet Address
                             </div>
-                            <div className="col-md-8">
+                            <div className="col-md-10">
                                 <Form.Control type="text" placeholder="User's wallet address" value={this.state.walletAddress} onChange={this.handleAddressChange} />
                             </div>
                         </div>
@@ -140,7 +152,7 @@ class Signing extends Component {
                             <div className="col-md-2">
                                 Signature
                             </div>
-                            <div className="col-md-8">
+                            <div className="col-md-10">
                                 <Form.Control as="textarea" placeholder="Signature to be validated" rows="3" value={this.state.signature} onChange={this.handleSignatureChange} />
                             </div>
                         </div>
@@ -154,10 +166,17 @@ class Signing extends Component {
                         <div className="col-md-2">
                             Signature is
                         </div>
-                        <div className="col-md-8">
+                        <div className="col-md-10">
                             <Form.Control type="text" value={this.state.validateSignature} readOnly />
                         </div>
                     </div>
+                   </div>
+
+                   <div className="col-md -4">
+                   <Form.Control as="textarea" rows="11" value="" readOnly />
+
+                   </div>
+                   </div>
                 </div>
             </div>
         );
