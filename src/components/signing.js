@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
-
 import Button from 'react-bootstrap/Button';
 import { PageHeading } from '../core/pageHeading';
+import { ValidState } from './validStateButton';
+import AlertComponent from './alertComponent';
 
 class Signing extends Component {
     ip = 'http://13.126.11.59:8000';
@@ -43,10 +44,22 @@ class Signing extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
-        });
+        }).catch(e => {
+            console.log("error", e)
+        }
+
+        );
         const content = await rawResponse.json();
         console.log('Sign data response : ', content);
-        this.setState({ signature: content.signature })
+        if (content.code) {
+            this.setState({ error: content.message });
+            this.setState({ code: content.code });
+        console.log('Code ', this.state.code);
+
+        }
+        else
+            this.setState({ signature: content.signature });
+
 
     }
 
@@ -81,6 +94,7 @@ class Signing extends Component {
                 <div className="jumbotron">
                     <div className="row">
                         <div className="col-md-8">
+                            <AlertComponent message={this.state.error} code={this.state.code} />
                             <Form onSubmit={this.handleSignDataSubmit}>
                                 <div className="row">
                                     <div className="col-md-2">
@@ -99,8 +113,9 @@ class Signing extends Component {
                                     </div>
                                 </div>
                                 <div className="row mt-2 mb-2">
-                                    <div className="col-md-12 text-center">
-                                        <Button variant="primary" type="submit">Sign</Button>
+                                    <div className="col-md-2"></div>
+                                    <div className="col-md-10  text-center">
+                                        <Button variant="primary" type="submit">Sign In</Button>
                                     </div>
                                 </div>
                             </Form>
@@ -129,54 +144,58 @@ class Signing extends Component {
                     </div>
                 </div>
                 <div className="jumbotron">
-                   <div className="row">
-                   <div className="col-md-8">
-                   <Form onSubmit={this.handleValidateSubmit}>
-                        <div className="row">
-                            <div className="col-md-2">
-                                Data
-                            </div>
-                            <div className="col-md-10">
-                                <Form.Control type="text" placeholder="Data against which signature is generated" value={this.state.data} onChange={this.handleDataChange} />
-                            </div>
-                        </div>
-                        <div className="row mt-2 mb-2">
-                            <div className="col-md-2">
-                                Wallet Address
-                            </div>
-                            <div className="col-md-10">
-                                <Form.Control type="text" placeholder="User's wallet address" value={this.state.walletAddress} onChange={this.handleAddressChange} />
-                            </div>
-                        </div>
-                        <div className="row mt-2 mb-2">
-                            <div className="col-md-2">
-                                Signature
-                            </div>
-                            <div className="col-md-10">
-                                <Form.Control as="textarea" placeholder="Signature to be validated" rows="3" value={this.state.signature} onChange={this.handleSignatureChange} />
-                            </div>
-                        </div>
-                        <div className="row mt-2 mb-2">
-                            <div className="col-md-12 text-center">
-                                <Button variant="primary" type="submit">Validate</Button>
-                            </div>
-                        </div>
-                    </Form>
                     <div className="row">
-                        <div className="col-md-2">
-                            Signature is
+                        <div className="col-md-8">
+                            <Form onSubmit={this.handleValidateSubmit}>
+                                <div className="row">
+                                    <div className="col-md-2">
+                                        Data
+                            </div>
+                                    <div className="col-md-10">
+                                        <Form.Control type="text" placeholder="Data against which signature is generated" value={this.state.data} onChange={this.handleDataChange} />
+                                    </div>
+                                </div>
+                                <div className="row mt-2 mb-2">
+                                    <div className="col-md-2">
+                                        Wallet Address
+                            </div>
+                                    <div className="col-md-10">
+                                        <Form.Control type="text" placeholder="User's wallet address" value={this.state.walletAddress} onChange={this.handleAddressChange} />
+                                    </div>
+                                </div>
+                                <div className="row mt-2 mb-2">
+                                    <div className="col-md-2">
+                                        Signature
+                            </div>
+                                    <div className="col-md-10">
+                                        <Form.Control as="textarea" placeholder="Signature to be validated" rows="3" value={this.state.signature} onChange={this.handleSignatureChange} />
+                                    </div>
+                                </div>
+                                <div className="row mt-2 mb-2">
+                                    <div className="col-md-12 text-center">
+                                        <Button variant="primary" type="submit">Validate</Button>
+                                    </div>
+                                </div>
+                            </Form>
+                            <div className="row">
+                                <div className="col-md-2">
+                                    Signature is
                         </div>
-                        <div className="col-md-10">
-                            <Form.Control type="text" value={this.state.validateSignature} readOnly />
+                                <div className="col-md-10">
+                                    <ValidState buttonState="" />
+
+                                    {/* <Form.Control type="text" value={this.state.validateSignature} readOnly /> */}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md -4">
+
+
+                            <Form.Control as="textarea" rows="11" value="" readOnly />
+
                         </div>
                     </div>
-                   </div>
-
-                   <div className="col-md -4">
-                   <Form.Control as="textarea" rows="11" value="" readOnly />
-
-                   </div>
-                   </div>
                 </div>
             </div>
         );
